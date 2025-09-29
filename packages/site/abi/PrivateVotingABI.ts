@@ -4,7 +4,9 @@ export const PrivateVotingABI = [
       {"internalType": "string", "name": "title", "type": "string"},
       {"internalType": "string[]", "name": "options", "type": "string[]"},
       {"internalType": "uint64", "name": "start", "type": "uint64"},
-      {"internalType": "uint64", "name": "end", "type": "uint64"}
+      {"internalType": "uint64", "name": "end", "type": "uint64"},
+      {"internalType": "bytes", "name": "encZeroExt", "type": "bytes"},
+      {"internalType": "bytes", "name": "attZero", "type": "bytes"}
     ],
     "name": "createPoll",
     "outputs": [{"internalType": "uint256", "name": "pollId", "type": "uint256"}],

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import Image from "next/image";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: "Zama FHEVM SDK Quickstart",
-  description: "Zama FHEVM SDK Quickstart app",
+  title: "FHE Voting System",
+  description: "Private Voting System using FHEVM",
 };
 
 export default async function RootLayout({
@@ -26,7 +27,10 @@ export default async function RootLayout({
               height={120}
             />
           </nav>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
         </main>
       </body>
     </html>

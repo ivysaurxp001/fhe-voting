@@ -7,7 +7,7 @@ import VotePoll from './VotePoll';
 import ViewResults from './ViewResults';
 
 // Contract address - đã deploy thành công
-const PRIVATE_VOTING_CONTRACT = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+const PRIVATE_VOTING_CONTRACT = '0x90791c8472d9262395d72c76572c8d6728F0dfF2';
 
 export default function PrivateVotingDemo() {
   const { polls, loadPolls, loading } = usePrivateVoting(PRIVATE_VOTING_CONTRACT);

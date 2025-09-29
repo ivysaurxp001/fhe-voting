@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { usePrivateVoting } from '../hooks/usePrivateVoting';
 
-const CONTRACT_ADDRESS = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+const CONTRACT_ADDRESS = '0x90791c8472d9262395d72c76572c8d6728F0dfF2';
 
 export default function ContractTest() {
   const { createPoll, loading, error } = usePrivateVoting(CONTRACT_ADDRESS);
@@ -13,9 +13,17 @@ export default function ContractTest() {
     try {
       setTestResult('Testing contract connection...');
       
-      // Test tạo poll đơn giản
+      // Test tạo poll đơn giản với gas limit cao hơn
       const now = Math.floor(Date.now() / 1000);
       const endTime = now + 3600; // 1 hour from now
+      
+      console.log('Testing with contract address:', CONTRACT_ADDRESS);
+      console.log('Poll data:', {
+        title: 'Test Poll',
+        options: ['Option 1', 'Option 2'],
+        start: now,
+        end: endTime
+      });
       
       const txHash = await createPoll(
         'Test Poll',
@@ -26,6 +34,7 @@ export default function ContractTest() {
       
       setTestResult(`✅ Success! Transaction hash: ${txHash}`);
     } catch (err: any) {
+      console.error('Contract test error:', err);
       setTestResult(`❌ Error: ${err.message}`);
     }
   };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { usePrivateVoting } from '../hooks/usePrivateVoting';
 
 interface CreatePollProps {
@@ -37,6 +37,12 @@ export default function CreatePoll({ contractAddress, onPollCreated }: CreatePol
     const start = Math.floor(new Date(startTime).getTime() / 1000);
     const end = Math.floor(new Date(endTime).getTime() / 1000);
 
+    // Check for NaN values
+    if (isNaN(start) || isNaN(end)) {
+      alert('Thời gian không hợp lệ. Vui lòng kiểm tra lại.');
+      return;
+    }
+
     if (start >= end) {
       alert('Thời gian kết thúc phải sau thời gian bắt đầu');
       return;
@@ -71,6 +77,16 @@ export default function CreatePoll({ contractAddress, onPollCreated }: CreatePol
   const formatDateTime = (date: Date) => {
     return date.toISOString().slice(0, 16);
   };
+
+  // Initialize default times on component mount
+  React.useEffect(() => {
+    if (!startTime) {
+      setStartTime(formatDateTime(now));
+    }
+    if (!endTime) {
+      setEndTime(formatDateTime(oneHourLater));
+    }
+  }, []);
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -124,7 +140,7 @@ export default function CreatePoll({ contractAddress, onPollCreated }: CreatePol
             <input
               type="datetime-local"
               id="startTime"
-              value={startTime || formatDateTime(now)}
+              value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
@@ -138,7 +154,7 @@ export default function CreatePoll({ contractAddress, onPollCreated }: CreatePol
             <input
               type="datetime-local"
               id="endTime"
-              value={endTime || formatDateTime(oneHourLater)}
+              value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
