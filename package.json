@@ -1,0 +1,24 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "0.3.0",
+  "license": "BSD-3-Clause-Clear",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "echo 'Dependencies installed. Run npm run setup to start the voting system.'",
+    "dev:mock": "npx -w ./packages/site npm run dev:mock",
+    "generate-abi": "node ./scripts/generate-site-abi.mjs",
+    "is-hardhat-node-running": "node ./scripts/is-hardhat-node-running.mjs",
+    "hardhat-node": "npx -w ./packages/fhevm-hardhat-template npm run hardhat-node",
+    "deploy:sepolia": "npx -w ./packages/fhevm-hardhat-template hardhat deploy --network sepolia",
+    "deploy:hardhat-node": "npm run is-hardhat-node-running && npx -w ./packages/fhevm-hardhat-template hardhat deploy --network localhost",
+    "setup": "echo 'Starting Private Voting System...' && echo '1. Run: npm run hardhat-node (in Terminal 1)' && echo '2. Run: npm run deploy:private-voting (in Terminal 2)' && echo '3. Run: npm run dev (in Terminal 3)' && echo '4. Update contract address in PrivateVotingDemo.tsx'",
+    "deploy:private-voting": "cd packages/fhevm-hardhat-template && npx hardhat run tasks/PrivateVoting.ts --network localhost",
+    "dev": "cd packages/site && npm run dev"
+  }
+}
